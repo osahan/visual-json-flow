@@ -1,0 +1,17 @@
+{
+  "name": "@vjf/react",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" } },
+  "scripts": { "build": "tsc -p tsconfig.json && cp src/styles.css dist/styles.css" },
+  "peerDependencies": { "react": "^18 || ^19", "react-dom": "^18 || ^19" },
+  "dependencies": {
+    "@vjf/core": "workspace:*",
+    "reactflow": "^11.10.3",
+    "immer": "^10.1.1",
+    "fast-deep-equal": "^3.1.3",
+    "clsx": "^2.1.0"
+  }
+}

@@ -1,0 +1,5 @@
+.vjf-node { border: 1px solid #ddd; border-radius: 8px; padding: 8px; background: #fff; }
+.vjf-title { font-weight: 600; margin-bottom: 4px; }
+.vjf-badge { font-size: 11px; padding: 2px 6px; border-radius: 999px; background: #eee; }
+.vjf-error { background: #ffe8e8; border-color: #ffb3b3; }
+.vjf-lane { background: #fafafa; padding: 8px; border-radius: 6px; }
