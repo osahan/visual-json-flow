@@ -147,7 +147,7 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
         return <SchemaView schema={schema} />;
       case 'preview':
         console.log('Rendering PreviewView');
-        return <PreviewView value={value} errors={validationErrors} />;
+        return <PreviewView value={value} errors={validationErrors} onChange={onChange} />;
       case 'editor':
       default:
         console.log('Rendering Editor (ReactFlow)');
