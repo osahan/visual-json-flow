@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback } from "react";
-import ReactFlow, { Background, Controls, MiniMap, Node, Edge, NodeChange, EdgeChange, applyNodeChanges, applyEdgeChanges, ReactFlowProvider } from "reactflow";
+import ReactFlow, { Background, Controls, MiniMap, Node, Edge, NodeChange, EdgeChange, applyNodeChanges, applyEdgeChanges, ReactFlowProvider, ControlButton } from "reactflow";
 import "reactflow/dist/style.css";
 import "./styles.css";
 import { compileSchemaToAst, createValidator, UiAst, UiNode } from "@vjf/core";
@@ -139,6 +139,47 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
     setEdges((eds) => applyEdgeChanges(changes, eds));
   }, [setEdges]);
 
+  // Format and organize the visual layout
+  const handleFormat = useCallback(() => {
+    console.log('Formatting layout...');
+    
+    // Get the current AST structure to understand the hierarchy
+    const astNodes = Object.values(ast.nodes);
+    
+    // Create a new organized layout
+    const formattedNodes = astNodes.map((node, index) => {
+      const existingNode = nodes.find(n => n.id === node.id);
+      if (!existingNode) return null;
+      
+      let x = 0;
+      let y = 0;
+      
+      if (node.type === 'group') {
+        // Root group nodes go on the left
+        x = 0;
+        y = index * 200;
+      } else if (node.type === 'scalar' || node.type === 'array' || node.type === 'choice') {
+        // Child nodes go to the right of their parent
+        x = 300;
+        y = index * 120;
+      }
+      
+      return {
+        ...existingNode,
+        position: { x, y }
+      };
+    }).filter((node): node is Node => node !== null);
+    
+    // Update node positions
+    setNodes(formattedNodes);
+    
+    // Fit view to show all nodes
+    setTimeout(() => {
+      // This will trigger a re-render and fit view
+      console.log('Layout formatted!');
+    }, 100);
+  }, [ast, nodes, setNodes]);
+
   const renderContent = () => {
     console.log('Rendering content for tab:', activeTab);
     switch (activeTab) {
@@ -183,9 +224,23 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
                 }}
                 onMouseDown={(event) => console.log('Mouse down on canvas:', event)}
                 onConnect={(params) => console.log('Connect:', params)}
+                        >
+            <MiniMap />
+            <Controls>
+              <ControlButton
+                onClick={handleFormat}
+                title="Format Layout"
+                className="react-flow__controls-button"
               >
-                <MiniMap /><Controls /><Background />
-              </ReactFlow>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 3L17 6L14 9L11 12L8 15L5 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M20 3L17 6L14 9L11 12L8 15L5 18" fill="currentColor" fillOpacity="0.2"/>
+                  <path d="M22 5L20 3L18 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </ControlButton>
+            </Controls>
+            <Background />
+          </ReactFlow>
             </ReactFlowProvider>
           </div>
         );

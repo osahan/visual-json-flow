@@ -782,6 +782,17 @@ body {
   color: var(--color-text-primary);
 }
 
+.vjf-format-button {
+  background: var(--color-info-500);
+  border-color: var(--color-info-500);
+  color: var(--color-text-inverse);
+}
+
+.vjf-format-button:hover {
+  background: var(--color-info-600);
+  border-color: var(--color-info-600);
+}
+
 .vjf-preview-errors {
   background: var(--color-error-50);
   border: 1px solid var(--color-error-500);

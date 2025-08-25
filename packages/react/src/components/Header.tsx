@@ -15,7 +15,7 @@ export function Header({
   status = "active", 
   activeTab = "editor",
   onStatusChange, 
-  onTabChange 
+  onTabChange
 }: HeaderProps) {
   return (
     <header className="vjf-header">
