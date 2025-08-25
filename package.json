@@ -1,10 +1,14 @@
 {
   "name": "visual-json-flow",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "yarn@4.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "build": "pnpm -r --filter ./packages... run build",
-    "dev": "pnpm -C apps/demo dev",
+    "build": "yarn workspaces foreach -A -pv run build",
+    "dev": "yarn workspace visual-json-flow-demo dev",
     "typecheck": "tsc -b",
     "clean": "git clean -xfd -e node_modules"
   },

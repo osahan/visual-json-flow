@@ -8,9 +8,9 @@ Give it a **JSON Schema**, get a **visual canvas** of nodes and lanes that makes
 
 ## Quickstart
 ```bash
-pnpm install
-pnpm -w build
-pnpm dev
+yarn install
+yarn build
+yarn dev
 ```
 Open http://localhost:5173
 
