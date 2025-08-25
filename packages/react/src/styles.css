@@ -384,6 +384,80 @@ body {
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   /* Ensure this area can be used for dragging */
   pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Error Indicator */
+.vjf-error-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.vjf-error-icon {
+  color: var(--color-error-500);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.vjf-error-icon:hover {
+  color: var(--color-error-600);
+}
+
+/* Error Tooltip */
+.vjf-error-tooltip {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-3);
+  min-width: 250px;
+  max-width: 300px;
+  z-index: var(--z-tooltip);
+  margin-top: var(--spacing-2);
+}
+
+.vjf-error-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-primary);
+  border-right: none;
+  border-bottom: none;
+  transform: rotate(45deg);
+}
+
+.vjf-error-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border-secondary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-error-600);
+}
+
+.vjf-error-tooltip ul {
+  margin: 0;
+  padding-left: var(--spacing-4);
+  list-style-type: disc;
+}
+
+.vjf-error-tooltip li {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-1);
+  line-height: var(--line-height-normal);
 }
 
 .vjf-title:active {
