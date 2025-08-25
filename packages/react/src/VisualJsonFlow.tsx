@@ -7,6 +7,7 @@ import ScalarNode from "./nodes/ScalarNode";
 import GroupNode from "./nodes/GroupNode";
 import ArrayLaneNode from "./nodes/ArrayLaneNode";
 import ChoiceNode from "./nodes/ChoiceNode";
+import { Header } from "./components/Header";
 import equal from "fast-deep-equal";
 
 type Props = { schema: any; value: any; onChange: (v: any) => void; onValidate?: (errors: any[]) => void; };
@@ -38,7 +39,13 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
 
     Object.values(ast.nodes).forEach((n, idx) => {
       const errors = errorsByPath[n.path] ?? [];
-      rfNodes.push({ id: n.id, type: n.type, position: { x: n.type === "group" ? 0 : 260, y: idx * 110 }, data: bindData(n, errors) });
+      rfNodes.push({ 
+        id: n.id, 
+        type: n.type, 
+        position: { x: n.type === "group" ? 0 : 260, y: idx * 110 }, 
+        data: bindData(n, errors),
+        draggable: true
+      });
       if (n.type === "group") n.children.forEach(cid => rfEdges.push({ id: `${n.id}-${cid}`, source: n.id, target: cid }));
       if (n.type === "array") rfEdges.push({ id: `${n.id}-${(n as any).item}`, source: n.id, target: (n as any).item });
       if (n.type === "choice") (n as any).options.forEach((o: any, i: number) => rfEdges.push({ id: `${n.id}-${o.node}-${i}`, source: n.id, target: o.node }));
@@ -49,10 +56,24 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
   }, [ast, value, selectedChoices, validator]);
 
   return (
-    <div style={{width:"100%", height:"100%"}}>
-      <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes}>
-        <MiniMap /><Controls /><Background />
-      </ReactFlow>
+    <div style={{width:"100%", height:"100%", display:"flex", flexDirection:"column"}}>
+      <Header 
+        projectName="Visual JSON Flow" 
+        status="active"
+        onStatusChange={(status) => console.log('Status changed:', status)}
+      />
+      <div style={{flex: 1, position: "relative"}}>
+        <ReactFlow 
+          nodes={nodes} 
+          edges={edges} 
+          nodeTypes={nodeTypes}
+          fitView
+          fitViewOptions={{ padding: 0.1 }}
+          defaultEdgeOptions={{ type: 'smoothstep' }}
+        >
+          <MiniMap /><Controls /><Background />
+        </ReactFlow>
+      </div>
     </div>
   );
 }

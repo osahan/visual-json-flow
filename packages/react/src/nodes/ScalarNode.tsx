@@ -20,11 +20,11 @@ export default function ScalarNode({ data }: { data: { node: UiNode; value: any;
     <input id={id} type={n.format === "email" ? "email" : n.format === "uri" ? "url" : "text"} value={data.value ?? ""} onChange={onInput} />
   );
   return (
-    <div className={"vjf-node"+err}>
+    <div className={`vjf-node ${err}`}>
       <div className="vjf-title">{n.title ?? n.path}</div>
       {input}
-      {n.description && <div style={{fontSize:12,opacity:.7,marginTop:4}}>{n.description}</div>}
-      {data.errors.length > 0 && <div className="vjf-badge" style={{marginTop:6}}>{data.errors[0]}</div>}
+      {n.description && <div className="vjf-description">{n.description}</div>}
+      {data.errors.length > 0 && <div className="vjf-badge">{data.errors[0]}</div>}
       <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
     </div>

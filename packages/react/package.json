@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "build": "npx tsc -p tsconfig.json && cp src/styles.css dist/styles.css"
+    "build": "npx tsc -p tsconfig.json && cp src/styles.css dist/styles.css && cp -r src/styles dist/"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
