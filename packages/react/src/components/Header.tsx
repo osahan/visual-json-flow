@@ -1,12 +1,22 @@
 import React from 'react';
 
+type TabType = 'editor' | 'schema' | 'preview';
+
 interface HeaderProps {
   projectName?: string;
   status?: 'active' | 'inactive' | 'draft';
+  activeTab?: TabType;
   onStatusChange?: (status: string) => void;
+  onTabChange?: (tab: TabType) => void;
 }
 
-export function Header({ projectName = "Visual JSON Flow", status = "active", onStatusChange }: HeaderProps) {
+export function Header({ 
+  projectName = "Visual JSON Flow", 
+  status = "active", 
+  activeTab = "editor",
+  onStatusChange, 
+  onTabChange 
+}: HeaderProps) {
   return (
     <header className="vjf-header">
       <div className="vjf-header-left">
@@ -26,9 +36,33 @@ export function Header({ projectName = "Visual JSON Flow", status = "active", on
       
       <div className="vjf-header-center">
         <nav className="vjf-nav">
-          <button className="vjf-nav-item vjf-nav-active">Editor</button>
-          <button className="vjf-nav-item">Schema</button>
-          <button className="vjf-nav-item">Preview</button>
+          <button 
+            className={`vjf-nav-item ${activeTab === 'editor' ? 'vjf-nav-active' : ''}`}
+            onClick={() => {
+              console.log('Editor tab clicked');
+              onTabChange?.('editor');
+            }}
+          >
+            Editor
+          </button>
+          <button 
+            className={`vjf-nav-item ${activeTab === 'schema' ? 'vjf-nav-active' : ''}`}
+            onClick={() => {
+              console.log('Schema tab clicked');
+              onTabChange?.('schema');
+            }}
+          >
+            Schema
+          </button>
+          <button 
+            className={`vjf-nav-item ${activeTab === 'preview' ? 'vjf-nav-active' : ''}`}
+            onClick={() => {
+              console.log('Preview tab clicked');
+              onTabChange?.('preview');
+            }}
+          >
+            Preview
+          </button>
         </nav>
       </div>
       

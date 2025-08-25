@@ -347,10 +347,6 @@ body {
   cursor: grab;
   /* Ensure the node can be dragged */
   touch-action: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .vjf-node:active {
@@ -386,6 +382,8 @@ body {
   margin: calc(-1 * var(--spacing-4)) calc(-1 * var(--spacing-4)) var(--spacing-2) calc(-1 * var(--spacing-4));
   background: var(--color-primary-50);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  /* Ensure this area can be used for dragging */
+  pointer-events: auto;
 }
 
 .vjf-title:active {
@@ -397,6 +395,22 @@ body {
 .vjf-node input,
 .vjf-node select {
   user-select: none;
+}
+
+/* Allow text selection on other elements */
+.vjf-node * {
+  user-select: text;
+}
+
+/* Ensure input elements don't interfere with dragging */
+.vjf-node input,
+.vjf-node select {
+  pointer-events: auto;
+}
+
+/* Make the rest of the node draggable */
+.vjf-node {
+  pointer-events: auto;
 }
 
 .vjf-node:hover {
@@ -578,6 +592,7 @@ body {
 /* Ensure nodes are draggable */
 .react-flow__node {
   cursor: grab !important;
+  transition: none !important; /* Disable transitions during drag */
 }
 
 .react-flow__node:active {
@@ -586,6 +601,12 @@ body {
 
 .react-flow__node-dragging {
   cursor: grabbing !important;
+}
+
+/* Ensure node positions update properly */
+.react-flow__node .vjf-node {
+  transform: none !important;
+  transition: none !important;
 }
 
 /* Canvas Background */
@@ -638,6 +659,135 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+/* ===== SCHEMA VIEW ===== */
+.vjf-schema-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-6);
+  background: var(--color-surface-primary);
+  overflow: hidden;
+}
+
+.vjf-schema-header {
+  margin-bottom: var(--spacing-6);
+}
+
+.vjf-schema-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.vjf-schema-header p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+.vjf-schema-content {
+  flex: 1;
+  overflow: auto;
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-primary);
+}
+
+.vjf-schema-json {
+  margin: 0;
+  padding: var(--spacing-4);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+/* ===== PREVIEW VIEW ===== */
+.vjf-preview-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-6);
+  background: var(--color-surface-primary);
+  overflow: hidden;
+}
+
+.vjf-preview-header {
+  margin-bottom: var(--spacing-6);
+}
+
+.vjf-preview-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.vjf-preview-header p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--spacing-4);
+}
+
+.vjf-preview-errors {
+  background: var(--color-error-50);
+  border: 1px solid var(--color-error-500);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.vjf-preview-errors h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-error-600);
+  margin-bottom: var(--spacing-2);
+}
+
+.vjf-preview-errors ul {
+  margin: 0;
+  padding-left: var(--spacing-4);
+}
+
+.vjf-error-item {
+  color: var(--color-error-600);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-1);
+}
+
+.vjf-preview-content {
+  flex: 1;
+  overflow: auto;
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-primary);
+}
+
+.vjf-preview-json {
+  margin: 0;
+  padding: var(--spacing-4);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .vjf-node {
@@ -653,5 +803,15 @@ body {
   .vjf-node select {
     font-size: var(--font-size-xs);
     padding: var(--spacing-1) var(--spacing-2);
+  }
+
+  .vjf-schema-view,
+  .vjf-preview-view {
+    padding: var(--spacing-4);
+  }
+
+  .vjf-schema-header h2,
+  .vjf-preview-header h2 {
+    font-size: var(--font-size-xl);
   }
 }
