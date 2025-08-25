@@ -505,7 +505,7 @@ components/
 │   ├── NodeBase/
 │   ├── NodeTypes/
 │   └── NodeInteractions/
-└── common/
+└── common, /
     ├── Button/
     ├── Icon/
     ├── Badge/

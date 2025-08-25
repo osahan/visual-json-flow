@@ -14,6 +14,7 @@ type Props = { schema: any; value: any; onChange: (v: any) => void; onValidate?:
 const nodeTypes = { scalar: ScalarNode, group: GroupNode, array: ArrayLaneNode, choice: ChoiceNode };
 
 export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
+  console.log('VisualJsonFlow component rendering');
   const ast = useMemo<UiAst>(() => compileSchemaToAst(schema), [schema]);
   const validator = useMemo(() => createValidator(schema), [schema]);
   const [selectedChoices, setSelectedChoices] = useState<Record<string, number>>({});
@@ -42,9 +43,14 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
       rfNodes.push({ 
         id: n.id, 
         type: n.type, 
-        position: { x: n.type === "group" ? 0 : 260, y: idx * 110 }, 
+        position: { x: n.type === "group" ? 0 : 260, y: idx * 120 }, 
         data: bindData(n, errors),
-        draggable: true
+        draggable: true,
+        style: { 
+          width: 250,
+          minHeight: 100,
+          zIndex: 1
+        }
       });
       if (n.type === "group") n.children.forEach(cid => rfEdges.push({ id: `${n.id}-${cid}`, source: n.id, target: cid }));
       if (n.type === "array") rfEdges.push({ id: `${n.id}-${(n as any).item}`, source: n.id, target: (n as any).item });
@@ -52,6 +58,8 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
     });
 
     onValidate?.(errors ?? []);
+    console.log('Created nodes:', rfNodes);
+    console.log('Created edges:', rfEdges);
     return { nodes: rfNodes, edges: rfEdges };
   }, [ast, value, selectedChoices, validator]);
 
@@ -70,6 +78,25 @@ export function VisualJsonFlow({ schema, value, onChange, onValidate }: Props) {
           fitView
           fitViewOptions={{ padding: 0.1 }}
           defaultEdgeOptions={{ type: 'smoothstep' }}
+          nodesDraggable={true}
+          nodesConnectable={false}
+          elementsSelectable={true}
+          onNodeDragStart={(event, node) => {
+            console.log('Node drag start:', node.id);
+            console.log('Event:', event);
+            console.log('Node:', node);
+          }}
+          onNodeDrag={(event, node) => {
+            console.log('Node dragging:', node.id);
+            console.log('Position:', node.position);
+          }}
+          onNodeDragStop={(event, node) => {
+            console.log('Node drag stop:', node.id);
+            console.log('Final position:', node.position);
+          }}
+          onMouseDown={(event) => console.log('Mouse down on canvas:', event)}
+          onConnect={(params) => console.log('Connect:', params)}
+          onNodesChange={(changes) => console.log('Nodes changed:', changes)}
         >
           <MiniMap /><Controls /><Background />
         </ReactFlow>
