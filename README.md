@@ -8,7 +8,7 @@ Give it a **JSON Schema**, get a **visual canvas** of nodes and lanes that makes
 
 ## 🚀 Live Demo
 
-**[Try the Interactive Demo →](https://yourusername.github.io/visual-json-flow)**
+**[Try the Interactive Demo →](https://osahan.github.io/visual-json-flow)**
 
 Experience Visual JSON Flow in action with our live demo featuring:
 - **Interactive Canvas** - Drag and drop nodes to build your JSON structure
@@ -74,7 +74,7 @@ The project includes automatic GitHub Pages deployment:
 
 1. **Enable GitHub Pages** in repository settings
 2. **Push to main branch** - deployment happens automatically
-3. **Access your demo** at `https://yourusername.github.io/visual-json-flow`
+3. **Access your demo** at `https://osahan.github.io/visual-json-flow`
 
 See [DEMO_SETUP.md](./DEMO_SETUP.md) for detailed deployment instructions.
 
