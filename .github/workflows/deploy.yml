@@ -42,15 +42,15 @@ jobs:
         ls -la packages/react/dist/
         yarn workspace visual-json-flow-demo build
       
-    - name: Prepare demo directory
+    - name: Prepare demo files
       run: |
-        mkdir -p demo
-        cp -r apps/demo/dist/* demo/
-        cp index.html demo/
+        # Copy demo files to root for GitHub Pages
+        cp -r apps/demo/dist/* .
+        cp index.html .
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./demo
+        publish_dir: ./
         cname: # Optional: add your custom domain here if you have one
