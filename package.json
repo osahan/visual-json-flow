@@ -7,7 +7,7 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "yarn workspaces foreach -A -i run build",
+    "build": "yarn workspace @vjf/core build && yarn workspace @vjf/react build && yarn workspace visual-json-flow-demo build",
     "dev": "yarn workspace visual-json-flow-demo dev",
     "typecheck": "tsc -b",
     "clean": "git clean -xfd -e node_modules",

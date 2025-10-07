@@ -23,4 +23,12 @@ jobs:
       - name: Type check
         run: yarn typecheck
       - name: Build
-        run: yarn build
+        run: |
+          echo "Building packages in sequence..."
+          yarn workspace @vjf/core build
+          echo "Core package built, checking dist..."
+          ls -la packages/core/dist/
+          yarn workspace @vjf/react build
+          echo "React package built, checking dist..."
+          ls -la packages/react/dist/
+          yarn workspace visual-json-flow-demo build
