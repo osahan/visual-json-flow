@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (Traditional)
 
 on:
   push:
@@ -25,21 +25,13 @@ jobs:
     - name: Enable Corepack
       run: corepack enable
       
-    - name: Verify Yarn version
-      run: yarn --version
-      
     - name: Install dependencies
       run: yarn install --immutable
       
     - name: Build
       run: |
-        echo "Building packages in sequence..."
         yarn workspace @vjf/core build
-        echo "Core package built, checking dist..."
-        ls -la packages/core/dist/
         yarn workspace @vjf/react build
-        echo "React package built, checking dist..."
-        ls -la packages/react/dist/
         yarn workspace visual-json-flow-demo build
       
     - name: Prepare demo directory
@@ -48,14 +40,9 @@ jobs:
         cp -r apps/demo/dist/* demo/
         cp index.html demo/
         
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-      
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./demo
-        
     - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./demo
+        cname: # Optional: add your custom domain here if you have one
