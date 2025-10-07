@@ -8,6 +8,7 @@ yarn.lock
 !.yarn/versions
 dist/
 build/
+demo/
 *.tsbuildinfo
 .vite/
 vite.config.ts.timestamp-*
