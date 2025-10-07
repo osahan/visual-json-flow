@@ -46,7 +46,6 @@ jobs:
       run: |
         # Copy demo files to root for GitHub Pages
         cp -r apps/demo/dist/* .
-        cp index.html .
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
