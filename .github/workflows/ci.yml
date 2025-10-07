@@ -19,7 +19,7 @@ jobs:
       - name: Verify Yarn version
         run: yarn --version
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Type check
         run: yarn typecheck
       - name: Build
