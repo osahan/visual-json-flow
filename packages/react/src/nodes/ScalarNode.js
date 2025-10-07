@@ -1,0 +1,19 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Handle, Position } from "reactflow";
+import { useId, useState } from "react";
+export default function ScalarNode({ data }) {
+    const id = useId();
+    const [showTooltip, setShowTooltip] = useState(false);
+    if (data.node.type !== "scalar")
+        return null;
+    const n = data.node;
+    const err = data.errors.length ? " vjf-error" : "";
+    const onInput = (e) => {
+        let v = e.target.value;
+        if (n.scalar === "number" || n.scalar === "integer")
+            v = v === "" ? null : Number(v);
+        data.onChange(v);
+    };
+    const input = n.enum ? (_jsxs("select", { id: id, value: data.value ?? "", onChange: onInput, children: [_jsx("option", { value: "", disabled: true, children: "Select\u2026" }), n.enum.map((v) => _jsx("option", { value: String(v), children: String(v) }, String(v)))] })) : (_jsx("input", { id: id, type: n.format === "email" ? "email" : n.format === "uri" ? "url" : "text", value: data.value ?? "", onChange: onInput }));
+    return (_jsxs("div", { className: `vjf-node ${err}`, children: [_jsxs("div", { className: "vjf-title", children: [n.title ?? n.path, data.errors.length > 0 && (_jsxs("div", { className: "vjf-error-indicator", children: [_jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", className: "vjf-error-icon", onMouseEnter: () => setShowTooltip(true), onMouseLeave: () => setShowTooltip(false), onClick: () => setShowTooltip(!showTooltip), children: [_jsx("circle", { cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "2" }), _jsx("line", { x1: "12", y1: "8", x2: "12", y2: "12", stroke: "currentColor", strokeWidth: "2" }), _jsx("line", { x1: "12", y1: "16", x2: "12.01", y2: "16", stroke: "currentColor", strokeWidth: "2" })] }), showTooltip && (_jsxs("div", { className: "vjf-error-tooltip", children: [_jsxs("div", { className: "vjf-error-tooltip-header", children: [_jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [_jsx("circle", { cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "2" }), _jsx("line", { x1: "12", y1: "8", x2: "12", y2: "12", stroke: "currentColor", strokeWidth: "2" }), _jsx("line", { x1: "12", y1: "16", x2: "12.01", y2: "16", stroke: "currentColor", strokeWidth: "2" })] }), _jsx("span", { children: "Validation Errors" })] }), _jsx("ul", { children: data.errors.map((error, index) => (_jsx("li", { children: error }, index))) })] }))] }))] }), input, n.description && _jsx("div", { className: "vjf-description", children: n.description }), _jsx(Handle, { type: "target", position: Position.Left }), _jsx(Handle, { type: "source", position: Position.Right })] }));
+}
