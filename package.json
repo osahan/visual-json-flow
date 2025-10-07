@@ -1,0 +1,20 @@
+{
+  "name": "visual-json-flow",
+  "private": true,
+  "packageManager": "yarn@4.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "yarn workspace @vjf/core build && yarn workspace @vjf/react build && yarn workspace visual-json-flow-demo build",
+    "dev": "yarn workspace visual-json-flow-demo dev",
+    "typecheck": "tsc -b",
+    "clean": "git clean -xfd -e node_modules",
+    "deploy-demo": "./scripts/deploy-demo.sh",
+    "preview": "yarn workspace visual-json-flow-demo preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
+}

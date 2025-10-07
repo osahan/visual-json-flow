@@ -1,0 +1,28 @@
+{
+  "name": "@vjf/react",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json && cp src/styles.css dist/styles.css && cp -r src/styles dist/"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@vjf/core": "workspace:*",
+    "clsx": "^2.1.0",
+    "fast-deep-equal": "^3.1.3",
+    "immer": "^10.1.1",
+    "reactflow": "^11.10.3"
+  }
+}

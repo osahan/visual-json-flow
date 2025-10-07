@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Article",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "title": "Title" },
+    "author": {
+      "type": "object",
+      "title": "Author",
+      "properties": {
+        "name": { "type": "string", "title": "Name" },
+        "email": { "type": "string", "format": "email", "title": "Email" }
+      }
+    },
+    "promote": {
+      "title": "Promotion Type",
+      "oneOf": [
+        { "title": "None", "type": "object", "properties": {} },
+        { "title": "Tag", "type": "object", "properties": { "tag": { "type": "string", "enum": ["featured","trending","sponsored"] } } }
+      ]
+    },
+    "media": {
+      "type": "array",
+      "title": "Media Gallery",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "format": "uri", "title":"URL" },
+          "caption": { "type": "string", "title": "Caption" }
+        }
+      }
+    }
+  },
+  "required": ["title", "author"]
+}
